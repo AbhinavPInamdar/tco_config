@@ -35,3 +35,7 @@ func (pe *PolicyEngine) EvaluateUsage(team string, newUsage int64) Action {
 
 }
 
+func (pe *PolicyEngine) AddTeamBudget(teamName string, budget Budget) {
+	pe.Teams[teamName] = budget
+}
+
