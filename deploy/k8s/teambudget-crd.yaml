@@ -1,0 +1,35 @@
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  name: teambudgets.tco.io
+spec:
+  group: tco.io
+  versions:
+  - name: v1
+    served: true
+    storage: true
+    schema:
+      openAPIV3Schema:
+        type: object
+        properties:
+          spec:
+            type: object
+            properties:
+              dailyLimit:
+                type: integer
+              monthlyLimit:
+                type: integer
+          status:
+            type: object
+            properties:
+              currentUsage:
+                type: integer
+              lastUpdated:
+                type: string
+
+  scope: Namespaced
+  names:
+    plural: teambudgets
+    singular: teambudget
+    kind: TeamBudget
+

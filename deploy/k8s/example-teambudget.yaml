@@ -1,0 +1,8 @@
+apiVersion: tco.io/v1
+kind: TeamBudget
+metadata:
+  name: backend-team
+  namespace: default
+spec:
+  dailyLimit: 1000000
+  monthlyLimit: 30000000
