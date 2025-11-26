@@ -18,14 +18,12 @@ const (
 func (pe *PolicyEngine) EvaluateUsage(team string, newUsage int64) Action {
 	budget, ok := pe.Teams[team]
 	if !ok {
-		// This part was already correct.
 		metrics.TeamBudgetActionsCounter.WithLabelValues(team, string(ActionDrop)).Inc()
 		return ActionDrop
 	}
 
 	totalbytes := budget.CurrentUsage + newUsage
 	var action Action
-
 
 	switch {
 	case totalbytes > budget.DailyLimit:
@@ -36,7 +34,6 @@ func (pe *PolicyEngine) EvaluateUsage(team string, newUsage int64) Action {
 		action = ActionAllow
 	}
 
-	
 	metrics.TeamBudgetActionsCounter.WithLabelValues(team, string(action)).Inc()
 
 	return action
@@ -44,4 +41,21 @@ func (pe *PolicyEngine) EvaluateUsage(team string, newUsage int64) Action {
 
 func (pe *PolicyEngine) AddTeamBudget(teamName string, budget Budget) {
 	pe.Teams[teamName] = budget
+}
+
+func EvaluateUsageStateless(team string, dailyLimit, currentUsage, newBytes int64) Action {
+	var action Action
+
+	totalBytes := currentUsage + newBytes
+	switch {
+	case totalBytes > dailyLimit:
+		action = ActionDrop
+	case totalBytes > dailyLimit*80/100:
+		action = ActionThrottle
+	default:
+		action = ActionAllow
+	}
+	metrics.TeamBudgetActionsCounter.WithLabelValues(team, string(action)).Inc()
+
+	return action
 }

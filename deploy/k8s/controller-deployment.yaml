@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tco-controller
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: tco-controller
+  template:
+    metadata:
+      labels:
+        app: tco-controller
+    spec:
+      serviceAccountName: tco-configurator
+      containers:
+      - name: controller
+        image: tco-configurator:latest
+        imagePullPolicy: Never
+        command: ["/app/controller"]

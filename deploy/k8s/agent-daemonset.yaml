@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: tco-agent
+  namespace: default
+spec:
+  selector:
+    matchLabels:
+      app: tco-agent
+  template:
+    metadata:
+      labels:
+        app: tco-agent
+    spec:
+      serviceAccountName: tco-configurator
+      containers:
+      - name: agent
+        image: tco-configurator:latest
+        imagePullPolicy: Always
+        command: ["/app/agent"]

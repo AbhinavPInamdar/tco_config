@@ -1,11 +1,10 @@
 package policy
 
-
 type Budget struct {
-	TeamName 		string
-	DailyLimit  	int64
-	MonthlyLimit 	int64
-	CurrentUsage 	int64
+	TeamName     string
+	DailyLimit   int64
+	MonthlyLimit int64
+	CurrentUsage int64
 }
 
 func (b Budget) IsOverDailyLimit() bool {
@@ -25,10 +24,9 @@ func (b Budget) IsOverMonthlyLimit() bool {
 }
 
 func (b Budget) RemainingBudget() int64 {
-	return b.DailyLimit-b.CurrentUsage
+	return b.DailyLimit - b.CurrentUsage
 }
 
 func (b Budget) PercentageUsage() float64 {
-	return float64(b.CurrentUsage)/float64(b.DailyLimit)
+	return float64(b.CurrentUsage) / float64(b.DailyLimit)
 }
- 
