@@ -1,4 +1,4 @@
-# TCO Configurator
+# Sluice (TCO Configurator)
 
 > A Kubernetes-native log budget management system for controlling cloud observability costs
 
